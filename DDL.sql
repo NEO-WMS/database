@@ -2,79 +2,121 @@ CREATE DATABASE wms;
 
 USE wms;
 
+## 이메일 인증 번호 테이블 생성
+CREATE TABLE email_auth_number (
+    email VARCHAR(100) PRIMARY KEY,
+    auth_number VARCHAR(6) NOT NULL
+);
+
+## 유저 테이블 생성
+CREATE TABLE user (
+    user_id VARCHAR(20) PRIMARY KEY,
+    user_password VARCHAR(255) NOT NULL,
+    user_email VARCHAR(100) NOT NULL UNIQUE,
+    user_role VARCHAR(25) NOT NULL DEFAULT('ROLE_USER') CHECK (
+        user_role IN (
+            'ROLE_USER',
+            'ROLE_ADMIN'
+        )
+    )
+);
+
+
+
 ## 입고
 - 입고 및 작업 스케줄링
 
 ### 공급자 (provider)
-
-
 CREATE TABLE provider {
-  providerId INT PRIMARY KEY,
-  providerName VARCHAR(100) NOT NULL,
-  providerAddress VARCHAR(255) NOT NULL
+  provider_id INT PRIMARY KEY,
+  provider_name VARCHAR(100) NOT NULL,
+  provider_address VARCHAR(255) NOT NULL
 }
-
-
 
 ## 주문접수
 - 고객사 주문접수 및 수신
-
 ### 주문 (order)
-- orderId INT PRIMARY KEY
-- orderDate INT NOT NULL
+CREATE TABLE order {
+  order_id INT PRIMARY KEY,
+  order_date INT NOT NULL
+}
 
 ### 주문상세 (orderDetail)
-- orderDetailId INT PRIMARY KEY
-- orderQuantity
+CREATE TABLE orderDetail {
+  order_detailId INT PRIMARY KEY,
+  order_quantity INT NOT NULL,
+  expected_date DATETIME NOT NULL DEFAULT(now()),
+  actual_date DATETIME NOT NULL DEFAULT(now())
+}
 
+# 배송
+CREATE TABLE transfer {
+  transter_id INT PRIMARY KEY,
+  transfer_quantity INT NOT NULL,
+  sent_date DATETIME NOT NULL DEFAULT(now()),
+  received_date DATETIME NOT NULL DEFAULT(now())
+}
 
 ## 출고
 - 다양한 운송장 등록 및 처리
 - 신속한 출고 확정관리
 
 ### 고객 (customer)
-- customerId INT PRIMARY KEY
-- customerName VARCHAR(100) NOT NULL
-- customerAddress VARCHAR(255) NOT NULL
+CREATE TABLE customer {
+  customerId INT PRIMARY KEY,
+  customerName VARCHAR(100) NOT NULL,
+  customerAddress VARCHAR(255) NOT NULL
+}
 
 ### 출고 (delivery)
-- deliveryId INT PRIMARY KEY
-- deliveryDate INT NOT NULL
+CREATE TABLE delivery {
+  deliveryId INT PRIMARY KEY,
+  deliveryDate INT NOT NULL
+}
 
 ### 주문상세 (orderDetail)
-- deliveryDetailId INT PRIMARY KEY
-- deliveryQuantity INT NOT NULL
-- expectedDate DATETIME NOT NULL
-- ActualDate DATETIME NOT NULL
+CREATE TABLE delivery_detail {
+  deliveryDetailId INT PRIMARY KEY,
+  deliveryQuantity INT NOT NULL,
+  expectedDate DATETIME NOT NULL DEFAULT(now()),
+  ActualDate DATETIME NOT NULL DEFAULT(now())
+}
 
 ## 장소 (location)
-- locationId INT PRIMARY KEY
-- locationName VARCHAR(100) NOT NULL
-- locationAddress VARCHAR(255) NOT NULL
-
-
-
+CREATE TABLE location {
+  locationId INT PRIMARY KEY,
+  locationName VARCHAR(100) NOT NULL,
+  locationAddress VARCHAR(255) NOT NULL
+}
 
 
 
 ## 재고관리
-- 재고변동에 대한 실시가 재고관리
+- 재고변동에 대한 실시간 재고관리
 ### product
-- productIdW
-- productCode
-- BarCode
-- productName
-- productDescription
-- productCategory
-- ReorderQuantity
-- packedWeight
-- packedHeight
-- packedWidth
-- PackedDepth
-- refrigerated
 
+CREATE TABLE product {
+  product_id INT PRIMARY KEY,
+  product_code VARCHAR(100) NOT NULL,
+  bar_code VARCHAR(100) NOT NULL,
+  product_name VARCHAR(100) NOT NULL,
+  product_description VARCHAR(2000),
+  product_category VARCHAR(100) NOT NULL,
+  reorder_quantity INT NOT NULL
+  packed_weight DECIMAL(10,2), 
+  packed_height DECIMAL(10,2),
+  packed_width DECIMAL(10,2),
+  Packed_depth DECIMAL(10,2),
+  refrigerated TINYINT NOT NULL DEFAULT(flase)
+}
 
-
+CREATE TABLE inventory {
+  inventory_id INT PRIMARY KEY,
+  quantity_available INT,
+  minimum_stock_level INT,
+  maximum_stock_level INT,
+  reorder_point INT
+}
 
 ## 임가공
 - 주문별 재고 할당작업
@@ -91,36 +133,6 @@ CREATE TABLE provider {
 
 
 
-## 이메일 인증 번호 테이블 생성
-CREATE TABLE email_auth_number (
-    email VARCHAR(100) PRIMARY KEY,
-    auth_number VARCHAR(4) NOT NULL
-);
-
-## 유저 테이블 생성
-CREATE TABLE user (
-    user_id VARCHAR(20) PRIMARY KEY,
-    user_password VARCHAR(255) NOT NULL,
-    user_email VARCHAR(100) NOT NULL UNIQUE,
-    user_gender VARCHAR(10) NOT NULL DEFAULT('MALE') CHECK (
-        user_gender IN ('MALE', 'FEMALE')
-    ),
-    user_age VARCHAR(10) NOT NULL,
-    user_image LONGTEXT,
-    user_company_name VARCHAR(100),
-    user_role VARCHAR(25) NOT NULL DEFAULT('ROLE_USER') CHECK (
-        user_role IN (
-            'ROLE_CUSTOMER',
-            'ROLE_DESIGNER',
-            'ROLE_ADMIN'
-        )
-    ),
-    join_path VARCHAR(5) NOT NULL DEFAULT('HOME') CHECK (
-        join_path IN ('HOME', 'KAKAO', 'NAVER')
-    ),
-    sns_id VARCHAR(255) UNIQUE,
-    CONSTRAINT user_email_fk FOREIGN KEY (user_email) REFERENCES email_auth_number (email) ON DELETE CASCADE
-);
 
 ## 공지사항 게시물 테이블 생성
 CREATE TABLE announcement_board (
