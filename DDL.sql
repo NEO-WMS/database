@@ -21,7 +21,7 @@ USE `wms` ;
 -- Table `wms`.`client`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `wms`.`client` (
-  `client_no` INT NOT NULL COMMENT '일련번호',
+  `client_no` INT NOT NULL AUTO_INCREMENT COMMENT '일련번호',
   `client_code` VARCHAR(40) NOT NULL COMMENT '거래처 코드',
   `client_category` INT NOT NULL COMMENT '분류',
   `client_name` VARCHAR(50) NOT NULL COMMENT '거래처명',
@@ -44,7 +44,7 @@ COMMENT = '거래처';
 -- Table `wms`.`item`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `wms`.`item` (
-  `item_no` INT NOT NULL COMMENT '일련번호',
+  `item_no` INT NOT NULL AUTO_INCREMENT COMMENT '일련번호',
   `item_client_no` INT NOT NULL COMMENT '거래처번호',
   `item_code` VARCHAR(30) NOT NULL COMMENT '품목코드\n',
   `item_name` VARCHAR(50) NOT NULL COMMENT '품목명\n',
@@ -66,7 +66,7 @@ COMMENT = '품목';
 -- Table `wms`.`warehouse`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `wms`.`warehouse` (
-  `warehouse_no` INT NOT NULL COMMENT '번호',
+  `warehouse_no` INT NOT NULL AUTO_INCREMENT COMMENT '번호',
   `warehouse_code` VARCHAR(30) NOT NULL COMMENT '창고코드',
   `warehouse_name` VARCHAR(30) NOT NULL COMMENT '창고명',
   PRIMARY KEY (`warehouse_no`))
@@ -78,7 +78,7 @@ COMMENT = '창고';
 -- Table `wms`.`area`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `wms`.`area` (
-  `area_no` INT NOT NULL COMMENT '번호',
+  `area_no` INT NOT NULL AUTO_INCREMENT COMMENT '번호',
   `area_ware_no` INT NOT NULL COMMENT '창고번호\n',
   `area_code` VARCHAR(30) NOT NULL COMMENT '구역코드\n',
   `area_name` VARCHAR(30) NOT NULL COMMENT '구역명\n',
@@ -97,7 +97,7 @@ COMMENT = '구역';
 -- Table `wms`.`rack`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `wms`.`rack` (
-  `rack_no` INT NOT NULL COMMENT '번호',
+  `rack_no` INT NOT NULL AUTO_INCREMENT COMMENT '번호',
   `rack_area_no` INT NOT NULL COMMENT '구역번호',
   `rack_code` VARCHAR(30) NOT NULL COMMENT '랙코드',
   `rack_name` VARCHAR(30) NOT NULL COMMENT '랙명',
@@ -116,7 +116,7 @@ COMMENT = '랙';
 -- Table `wms`.`cell`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `wms`.`cell` (
-  `cell_no` INT NOT NULL COMMENT '번호',
+  `cell_no` INT NOT NULL AUTO_INCREMENT COMMENT '번호',
   `cell_rack_no` INT NOT NULL COMMENT '랙번호',
   `cell_code` VARCHAR(30) NOT NULL COMMENT 'ㄹ셀코드',
   `cell_name` VARCHAR(30) NOT NULL COMMENT '셀명',
@@ -135,7 +135,7 @@ COMMENT = '셀';
 -- Table `wms`.`warehouse_detail`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `wms`.`warehouse_detail` (
-  `warehouse_detail_no` INT NOT NULL COMMENT '일련번호',
+  `warehouse_detail_no` INT NOT NULL AUTO_INCREMENT COMMENT '일련번호',
   `warehouse_detail_lot_code` VARCHAR(30) NOT NULL COMMENT '로트 코드',
   `warehouse_detail_amount` INT NOT NULL COMMENT '재고 수량',
   `warehouse_detail_ordered_amount` INT NULL COMMENT '수주 체결 수량',
@@ -183,7 +183,7 @@ COMMENT = '창고별 재고현황';
 -- Table `wms`.`item_movement_history`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `wms`.`item_movement_history` (
-  `item_movement_history_no` INT NOT NULL COMMENT '일련번호',
+  `item_movement_history_no` INT NOT NULL AUTO_INCREMENT COMMENT '일련번호',
   `item_movement_history_lot_no` VARCHAR(100) NOT NULL COMMENT '로트번호',
   `item_movement_history_item_no` INT NOT NULL COMMENT '품목번호',
   `item_movement_history_amount` INT NOT NULL COMMENT '이동수량',
@@ -253,7 +253,7 @@ COMMENT = '재고이동';
 -- Table `wms`.`department`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `wms`.`department` (
-  `department_no` INT NOT NULL COMMENT '번호',
+  `department_no` INT NOT NULL AUTO_INCREMENT COMMENT '번호',
   `department_code` VARCHAR(30) NOT NULL COMMENT '부서코드',
   `department_name` VARCHAR(30) NOT NULL COMMENT '부서명',
   PRIMARY KEY (`department_no`))
@@ -265,7 +265,7 @@ COMMENT = '부서';
 -- Table `wms`.`rank`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `wms`.`rank` (
-  `rank_no` INT NOT NULL COMMENT '번호\n',
+  `rank_no` INT NOT NULL AUTO_INCREMENT COMMENT '번호\n',
   `rank_code` VARCHAR(30) NOT NULL COMMENT '직급코드',
   `rank_name` VARCHAR(30) NOT NULL COMMENT '직급명',
   PRIMARY KEY (`rank_no`))
@@ -277,7 +277,7 @@ COMMENT = '직급';
 -- Table `wms`.`member`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `wms`.`member` (
-  `member_no` INT NOT NULL COMMENT '번호\n',
+  `member_no` INT NOT NULL AUTO_INCREMENT COMMENT '번호\n',
   `member_id` VARCHAR(30) NOT NULL COMMENT '아이디',
   `member_pw` VARCHAR(50) NOT NULL COMMENT '비밀번호',
   `member_name` VARCHAR(30) NOT NULL COMMENT '이름',
@@ -307,7 +307,7 @@ COMMENT = '사원정보';
 -- Table `wms`.`order_sheet`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `wms`.`order_sheet` (
-  `order_sheet_no` INT NOT NULL COMMENT '일련번호',
+  `order_sheet_no` INT NOT NULL AUTO_INCREMENT COMMENT '일련번호',
   `order_sheet_member_no` INT NOT NULL COMMENT '담당자번호',
   `order_sheet_client_no` INT NOT NULL COMMENT '고객사번호',
   `order_sheet_day` DATE NOT NULL COMMENT '작성일자',
@@ -334,7 +334,7 @@ COMMENT = '수주서';
 -- Table `wms`.`sell`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `wms`.`sell` (
-  `sell_no` INT NOT NULL COMMENT '일련번호',
+  `sell_no` INT NOT NULL AUTO_INCREMENT COMMENT '일련번호',
   `sell_member_no` INT NOT NULL COMMENT '담당자번호',
   `sell_order_no` INT NULL COMMENT '수주번호',
   `sell_day` DATE NOT NULL COMMENT '판매일자',
@@ -359,7 +359,7 @@ COMMENT = '판매(출고)';
 -- Table `wms`.`purchase_sheet`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `wms`.`purchase_sheet` (
-  `purchase_sheet_no` INT NOT NULL COMMENT '일련번호',
+  `purchase_sheet_no` INT NOT NULL AUTO_INCREMENT COMMENT '일련번호',
   `purchase_sheet_day` DATE NOT NULL COMMENT '작성일자',
   `purchase_sheet_delivery_date` DATE NULL COMMENT '납기일자',
   `purchase_sheet_status` INT NOT NULL COMMENT '발주진행상태',
@@ -393,7 +393,7 @@ COMMENT = '발주서';
 -- Table `wms`.`order_detail`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `wms`.`order_detail` (
-  `order_detail_no` INT NOT NULL COMMENT '일련번호',
+  `order_detail_no` INT NOT NULL AUTO_INCREMENT COMMENT '일련번호',
   `order_detail_order_no` INT NOT NULL COMMENT '수주서번호',
   `order_detail_item_no` INT NOT NULL COMMENT '품목번호',
   `order_detail_amount` INT NOT NULL COMMENT '주문수량',
@@ -418,7 +418,7 @@ COMMENT = '수주서 상세';
 -- Table `wms`.`purchase_sheet_detail`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `wms`.`purchase_sheet_detail` (
-  `purchase_sheet_detail_no` INT NOT NULL COMMENT '일련번호',
+  `purchase_sheet_detail_no` INT NOT NULL AUTO_INCREMENT COMMENT '일련번호',
   `purchase_sheet_detail_purchase_sheet_no` INT NOT NULL COMMENT '발주서번호',
   `purchase_sheet_detail_order_detail_no` INT NULL COMMENT '수주상세번호',
   `purchase_sheet_detail_amount` INT NOT NULL COMMENT '발주수량',
@@ -457,7 +457,7 @@ COMMENT = '발주서 상세';
 -- Table `wms`.`sell_detail`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `wms`.`sell_detail` (
-  `sell_detail_no` INT NOT NULL COMMENT '일련번호',
+  `sell_detail_no` INT NOT NULL AUTO_INCREMENT COMMENT '일련번호',
   `sell_detail_item_no` INT NOT NULL COMMENT '품목번호',
   `sell_detail_amount` INT NOT NULL COMMENT '수량',
   `sell_detail_sell_price` INT NOT NULL COMMENT '판매단가',
@@ -478,7 +478,7 @@ COMMENT = '판매(출고)상세';
 -- Table `wms`.`lot`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `wms`.`lot` (
-  `lot_no` INT NOT NULL COMMENT '일련번호',
+  `lot_no` INT NOT NULL AUTO_INCREMENT COMMENT '일련번호',
   `lot_code` VARCHAR(30) NOT NULL COMMENT '로트코드\n',
   `lot_item_no` INT NOT NULL COMMENT '품목번호',
   PRIMARY KEY (`lot_no`),
@@ -496,7 +496,7 @@ COMMENT = '로트넘버';
 -- Table `wms`.`input_warehouse`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `wms`.`input_warehouse` (
-  `input_warehouse_no` INT NOT NULL COMMENT '일련번호\n',
+  `input_warehouse_no` INT NOT NULL AUTO_INCREMENT COMMENT '일련번호\n',
   `input_warehouse_member_no` INT NOT NULL COMMENT '담당자번호',
   `input_warehouse_purchase_sheet_no` INT NULL COMMENT '발주서번호',
   `input_warehouse_status` VARCHAR(45) NOT NULL COMMENT '구분',
@@ -521,7 +521,7 @@ COMMENT = '입고';
 -- Table `wms`.`input_warehouse_datail`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `wms`.`input_warehouse_datail` (
-  `input_warehouse_datail_no` INT NOT NULL COMMENT '일련번호',
+  `input_warehouse_datail_no` INT NOT NULL AUTO_INCREMENT COMMENT '일련번호',
   `input_warehouse_datail_input_warehouse_no` INT NOT NULL COMMENT '입고번호',
   `input_warehouse_datail_purchase_sheet_detail_no` INT NULL COMMENT '발주서상세번호',
   `input_warehouse_datail_status` INT NOT NULL COMMENT '구분',
@@ -533,7 +533,7 @@ CREATE TABLE IF NOT EXISTS `wms`.`input_warehouse_datail` (
   `input_warehouse_datail_cell_no` INT NOT NULL COMMENT '셀번호',
   `input_warehouse_datail_lot_no` INT NOT NULL COMMENT '로드코드',
   `input_warehouse_datail_item_no` INT NOT NULL COMMENT '품목코드',
-  PRIMARY KEY (`input_warehouse_datail_no`, `input_warehouse_datail_input_warehouse_no`),
+  PRIMARY KEY (`input_warehouse_datail_no`),
   INDEX `input_warehouse_no_idx` (`input_warehouse_datail_input_warehouse_no` ASC) VISIBLE,
   INDEX `purchase_sheet_detail_no_idx` (`input_warehouse_datail_purchase_sheet_detail_no` ASC) VISIBLE,
   INDEX `ware_no_idx` (`input_warehouse_datail_ware_no` ASC) VISIBLE,
@@ -589,3 +589,10 @@ COMMENT = '입고상세';
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+DROP USER IF EXISTS 'developer'@'%';
+
+CREATE USER 'developer'@'%' IDENTIFIED BY 'P!ssw0rd';
+
+GRANT ALL PRIVILEGES ON hair.* TO 'developer'@'%';
