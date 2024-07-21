@@ -247,6 +247,7 @@ CREATE TABLE IF NOT EXISTS `wms`.`member` (
     `member_email` VARCHAR(50) NOT NULL COMMENT '이메일',
     `member_image` LONG NULL COMMENT '프로필 사진',
     `member_reg_date` DATE NULL DEFAULT(now()) COMMENT '최초가입일',
+    `member_role` VARCHAR (25) NOT NULL DEFAULT('ROLE_USER') CHECK (member_role IN ('ROLE_USER', 'ROLE_ADMIN')),
     PRIMARY KEY (`member_no`),
     INDEX `dep_no_idx` (`member_dep_no` ASC) VISIBLE,
     INDEX `rank_no_idx` (`member_rank_no` ASC) VISIBLE,
