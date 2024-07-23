@@ -247,6 +247,9 @@ CREATE TABLE IF NOT EXISTS `wms`.`member` (
     `member_email` VARCHAR(50) NOT NULL COMMENT '이메일',
     `member_image` LONG NULL COMMENT '프로필 사진',
     `member_reg_date` DATE NULL DEFAULT(now()) COMMENT '최초가입일',
+    `member_role` VARCHAR(25) NOT NULL DEFAULT('ROLE_USER') CHECK (
+        member_role IN ('ROLE_USER', 'ROLE_ADMIN')
+    ),
     PRIMARY KEY (`member_no`),
     INDEX `dep_no_idx` (`member_dep_no` ASC) VISIBLE,
     INDEX `rank_no_idx` (`member_rank_no` ASC) VISIBLE,
@@ -407,69 +410,69 @@ CREATE TABLE IF NOT EXISTS `wms`.`input_warehouse` (
 ) ENGINE = InnoDB COMMENT = '입고';
 
 -- -----------------------------------------------------
--- Table `wms`.`input_warehouse_datail`
+-- Table `wms`.`input_warehouse_detail`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `wms`.`input_warehouse_datail` (
-    `input_warehouse_datail_no` INT NOT NULL AUTO_INCREMENT COMMENT '일련번호',
-    `input_warehouse_datail_input_warehouse_no` INT NOT NULL COMMENT '입고번호',
-    `input_warehouse_datail_purchase_sheet_detail_no` INT NULL COMMENT '발주서상세번호',
-    `input_warehouse_datail_status` INT NOT NULL COMMENT '구분',
-    `input_warehouse_datail_arrival_date` DATE NOT NULL COMMENT '입고일자',
-    `input_warehouse_datail_qty` INT NOT NULL COMMENT '입고수량',
-    `input_warehouse_datail_ware_no` INT NOT NULL COMMENT '초기창고코드',
-    `input_warehouse_datail_area_no` INT NOT NULL COMMENT '구역번호',
-    `input_warehouse_datail_rack_no` INT NOT NULL COMMENT '랙번호',
-    `input_warehouse_datail_cell_no` INT NOT NULL COMMENT '셀번호',
-    `input_warehouse_datail_lot_no` INT NOT NULL COMMENT '로드코드',
-    `input_warehouse_datail_item_no` INT NOT NULL COMMENT '품목코드',
-    PRIMARY KEY (`input_warehouse_datail_no`),
+CREATE TABLE IF NOT EXISTS `wms`.`input_warehouse_detail` (
+    `input_warehouse_detail_no` INT NOT NULL AUTO_INCREMENT COMMENT '일련번호',
+    `input_warehouse_detail_input_warehouse_no` INT NOT NULL COMMENT '입고번호',
+    `input_warehouse_detail_purchase_sheet_detail_no` INT NULL COMMENT '발주서상세번호',
+    `input_warehouse_detail_status` INT NOT NULL COMMENT '구분',
+    `input_warehouse_detail_arrival_date` DATE NOT NULL COMMENT '입고일자',
+    `input_warehouse_detail_qty` INT NOT NULL COMMENT '입고수량',
+    `input_warehouse_detail_ware_no` INT NOT NULL COMMENT '초기창고코드',
+    `input_warehouse_detail_area_no` INT NOT NULL COMMENT '구역번호',
+    `input_warehouse_detail_rack_no` INT NOT NULL COMMENT '랙번호',
+    `input_warehouse_detail_cell_no` INT NOT NULL COMMENT '셀번호',
+    `input_warehouse_detail_lot_no` INT NOT NULL COMMENT '로드코드',
+    `input_warehouse_detail_item_no` INT NOT NULL COMMENT '품목코드',
+    PRIMARY KEY (`input_warehouse_detail_no`),
     INDEX `input_warehouse_no_idx` (
-        `input_warehouse_datail_input_warehouse_no` ASC
+        `input_warehouse_detail_input_warehouse_no` ASC
     ) VISIBLE,
     INDEX `purchase_sheet_detail_no_idx` (
-        `input_warehouse_datail_purchase_sheet_detail_no` ASC
+        `input_warehouse_detail_purchase_sheet_detail_no` ASC
     ) VISIBLE,
     INDEX `ware_no_idx` (
-        `input_warehouse_datail_ware_no` ASC
+        `input_warehouse_detail_ware_no` ASC
     ) VISIBLE,
     INDEX `area_no_idx` (
-        `input_warehouse_datail_area_no` ASC
+        `input_warehouse_detail_area_no` ASC
     ) VISIBLE,
     INDEX `rack_no_idx` (
-        `input_warehouse_datail_rack_no` ASC
+        `input_warehouse_detail_rack_no` ASC
     ) VISIBLE,
     INDEX `cell_no_idx` (
-        `input_warehouse_datail_cell_no` ASC
+        `input_warehouse_detail_cell_no` ASC
     ) VISIBLE,
     INDEX `lot_no_idx` (
-        `input_warehouse_datail_lot_no` ASC
+        `input_warehouse_detail_lot_no` ASC
     ) VISIBLE,
     INDEX `item_code_idx` (
-        `input_warehouse_datail_item_no` ASC
+        `input_warehouse_detail_item_no` ASC
     ) VISIBLE,
-    CONSTRAINT `fk_input_warehouse_datail_input_warehouse_no` FOREIGN KEY (
-        `input_warehouse_datail_input_warehouse_no`
+    CONSTRAINT `fk_input_warehouse_detail_input_warehouse_no` FOREIGN KEY (
+        `input_warehouse_detail_input_warehouse_no`
     ) REFERENCES `wms`.`input_warehouse` (`input_warehouse_no`) ON DELETE CASCADE ON UPDATE NO ACTION,
-    CONSTRAINT `fk_input_warehouse_datail_purchase_sheet_detail_no` FOREIGN KEY (
-        `input_warehouse_datail_purchase_sheet_detail_no`
+    CONSTRAINT `fk_input_warehouse_detail_purchase_sheet_detail_no` FOREIGN KEY (
+        `input_warehouse_detail_purchase_sheet_detail_no`
     ) REFERENCES `wms`.`purchase_sheet_detail` (`purchase_sheet_detail_no`) ON DELETE CASCADE ON UPDATE NO ACTION,
-    CONSTRAINT `fk_input_warehouse_datail_ware_no` FOREIGN KEY (
-        `input_warehouse_datail_ware_no`
+    CONSTRAINT `fk_input_warehouse_detail_ware_no` FOREIGN KEY (
+        `input_warehouse_detail_ware_no`
     ) REFERENCES `wms`.`warehouse` (`warehouse_no`) ON DELETE CASCADE ON UPDATE NO ACTION,
-    CONSTRAINT `fk_input_warehouse_datail_area_no` FOREIGN KEY (
-        `input_warehouse_datail_area_no`
+    CONSTRAINT `fk_input_warehouse_detail_area_no` FOREIGN KEY (
+        `input_warehouse_detail_area_no`
     ) REFERENCES `wms`.`area` (`area_no`) ON DELETE CASCADE ON UPDATE NO ACTION,
-    CONSTRAINT `fk_input_warehouse_datail_rack_no` FOREIGN KEY (
-        `input_warehouse_datail_rack_no`
+    CONSTRAINT `fk_input_warehouse_detail_rack_no` FOREIGN KEY (
+        `input_warehouse_detail_rack_no`
     ) REFERENCES `wms`.`rack` (`rack_no`) ON DELETE CASCADE ON UPDATE NO ACTION,
-    CONSTRAINT `fk_input_warehouse_datail_cell_no` FOREIGN KEY (
-        `input_warehouse_datail_cell_no`
+    CONSTRAINT `fk_input_warehouse_detail_cell_no` FOREIGN KEY (
+        `input_warehouse_detail_cell_no`
     ) REFERENCES `wms`.`cell` (`cell_no`) ON DELETE CASCADE ON UPDATE NO ACTION,
-    CONSTRAINT `fk_input_warehouse_datail_lot_no` FOREIGN KEY (
-        `input_warehouse_datail_lot_no`
+    CONSTRAINT `fk_input_warehouse_detail_lot_no` FOREIGN KEY (
+        `input_warehouse_detail_lot_no`
     ) REFERENCES `wms`.`lot` (`lot_no`) ON DELETE CASCADE ON UPDATE NO ACTION,
-    CONSTRAINT `fk_input_warehouse_datail_item_no` FOREIGN KEY (
-        `input_warehouse_datail_item_no`
+    CONSTRAINT `fk_input_warehouse_detail_item_no` FOREIGN KEY (
+        `input_warehouse_detail_item_no`
     ) REFERENCES `wms`.`item` (`item_no`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE = InnoDB COMMENT = '입고상세';
 
