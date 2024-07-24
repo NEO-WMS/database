@@ -419,7 +419,7 @@ CREATE TABLE IF NOT EXISTS `wms`.`input_warehouse_detail` (
     `input_warehouse_detail_status` INT NOT NULL COMMENT '구분',
     `input_warehouse_detail_arrival_date` DATE NOT NULL COMMENT '입고일자',
     `input_warehouse_detail_qty` INT NOT NULL COMMENT '입고수량',
-    `input_warehouse_detail_ware_no` INT NOT NULL COMMENT '초기창고코드',
+    `input_warehouse_detail_warehouse_no` INT NOT NULL COMMENT '초기창고코드',
     `input_warehouse_detail_area_no` INT NOT NULL COMMENT '구역번호',
     `input_warehouse_detail_rack_no` INT NOT NULL COMMENT '랙번호',
     `input_warehouse_detail_cell_no` INT NOT NULL COMMENT '셀번호',
