@@ -486,4 +486,4 @@ DROP USER IF EXISTS 'developer' @'%';
 
 CREATE USER 'developer' @'%' IDENTIFIED BY 'P!ssw0rd';
 
-GRANT ALL PRIVILEGES ON hair.* TO 'developer' @'%';
+GRANT ALL PRIVILEGES ON wms.* TO 'developer' @'%';
