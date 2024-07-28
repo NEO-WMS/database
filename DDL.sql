@@ -476,6 +476,17 @@ CREATE TABLE IF NOT EXISTS `wms`.`input_warehouse_detail` (
     ) REFERENCES `wms`.`item` (`item_no`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE = InnoDB COMMENT = '입고상세';
 
+-- -----------------------------------------------------
+-- Table `wms`.`board`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `wms`.`board` (
+    `board_no` INT NOT NULL AUTO_INCREMENT COMMENT '게시물 번호',
+    `board_title` VARCHAR(100) NOT NULL COMMENT '게시물 제목',
+    `board_content` TEXT NOT NULL COMMENT '게시물 내용',
+    `board_date` DATE NOT NULL COMMENT '게시물 작성일',
+    PRIMARY KEY (`board_no`)
+) ENGINE = InnoDB COMMENT = '게시물 테이블';
+
 SET SQL_MODE = @OLD_SQL_MODE;
 
 SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS;
