@@ -239,7 +239,7 @@ CREATE TABLE IF NOT EXISTS `wms`.`rank` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `wms`.`member` (
     `member_no` INT NOT NULL AUTO_INCREMENT COMMENT '번호\n',
-    `member_id` VARCHAR(30) NOT NULL COMMENT '아이디',
+    `member_id` VARCHAR(30) NOT NULL UNIQUE COMMENT '아이디',
     `member_pw` VARCHAR(50) NOT NULL COMMENT '비밀번호',
     `member_name` VARCHAR(30) NOT NULL COMMENT '이름',
     `member_dep_no` INT NOT NULL COMMENT '부서번호',
