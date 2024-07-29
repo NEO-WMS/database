@@ -433,7 +433,7 @@ CREATE TABLE IF NOT EXISTS `wms`.`input_warehouse_detail` (
         `input_warehouse_detail_purchase_sheet_detail_no` ASC
     ) VISIBLE,
     INDEX `ware_no_idx` (
-        `input_warehouse_detail_ware_no` ASC
+        `input_warehouse_detail_warehouse_no` ASC
     ) VISIBLE,
     INDEX `area_no_idx` (
         `input_warehouse_detail_area_no` ASC
@@ -456,8 +456,8 @@ CREATE TABLE IF NOT EXISTS `wms`.`input_warehouse_detail` (
     CONSTRAINT `fk_input_warehouse_detail_purchase_sheet_detail_no` FOREIGN KEY (
         `input_warehouse_detail_purchase_sheet_detail_no`
     ) REFERENCES `wms`.`purchase_sheet_detail` (`purchase_sheet_detail_no`) ON DELETE CASCADE ON UPDATE NO ACTION,
-    CONSTRAINT `fk_input_warehouse_detail_ware_no` FOREIGN KEY (
-        `input_warehouse_detail_ware_no`
+    CONSTRAINT `fk_input_warehouse_detail_warehouse_no` FOREIGN KEY (
+        `input_warehouse_detail_warehouse_no`
     ) REFERENCES `wms`.`warehouse` (`warehouse_no`) ON DELETE CASCADE ON UPDATE NO ACTION,
     CONSTRAINT `fk_input_warehouse_detail_area_no` FOREIGN KEY (
         `input_warehouse_detail_area_no`
