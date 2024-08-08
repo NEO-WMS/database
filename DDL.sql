@@ -76,12 +76,12 @@ CREATE TABLE IF NOT EXISTS `wms`.`warehouse` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `wms`.`area` (
     `area_no` INT NOT NULL AUTO_INCREMENT COMMENT '번호',
-    `area_ware_no` INT NOT NULL COMMENT '창고번호\n',
+    `area_warehouse_no` INT NOT NULL COMMENT '창고번호\n',
     `area_code` VARCHAR(30) NOT NULL COMMENT '구역코드\n',
     `area_name` VARCHAR(30) NOT NULL COMMENT '구역명\n',
     PRIMARY KEY (`area_no`),
-    INDEX `ware_no_idx` (`area_ware_no` ASC) VISIBLE,
-    CONSTRAINT `fk_area_ware_no` FOREIGN KEY (`area_ware_no`) REFERENCES `wms`.`warehouse` (`warehouse_no`) ON DELETE CASCADE ON UPDATE NO ACTION
+    INDEX `warehouse_no_idx` (`area_warehouse_no` ASC) VISIBLE,
+    CONSTRAINT `fk_area_warehouse_no` FOREIGN KEY (`area_warehouse_no`) REFERENCES `wms`.`warehouse` (`warehouse_no`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE = InnoDB COMMENT = '구역';
 
 -- -----------------------------------------------------
@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `wms`.`warehouse_detail` (
     `warehouse_detail_amount` INT NOT NULL COMMENT '재고 수량',
     `warehouse_detail_ordered_amount` INT NULL COMMENT '수주 체결 수량',
     `warehouse_detail_item_no` INT NOT NULL COMMENT '품목 번호',
-    `warehouse_detail_ware_no` INT NOT NULL COMMENT '창고번호',
+    `warehouse_detail_warehouse_no` INT NOT NULL COMMENT '창고번호',
     `warehouse_detail_area_no` INT NOT NULL COMMENT '구역번호',
     `warehouse_detail_rack_no` INT NOT NULL COMMENT '랙번호',
     `warehouse_detail_cell_no` INT NOT NULL COMMENT '셀번호',
@@ -127,8 +127,8 @@ CREATE TABLE IF NOT EXISTS `wms`.`warehouse_detail` (
     INDEX `item_no_idx` (
         `warehouse_detail_item_no` ASC
     ) VISIBLE,
-    INDEX `ware_no_idx` (
-        `warehouse_detail_ware_no` ASC
+    INDEX `warehouse_no_idx` (
+        `warehouse_detail_warehouse_no` ASC
     ) VISIBLE,
     INDEX `area_no_idx` (
         `warehouse_detail_area_no` ASC
@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `wms`.`warehouse_detail` (
         `warehouse_detail_cell_no` ASC
     ) VISIBLE,
     CONSTRAINT `fk_warehouse_detail_item_no` FOREIGN KEY (`warehouse_detail_item_no`) REFERENCES `wms`.`item` (`item_no`) ON DELETE CASCADE ON UPDATE NO ACTION,
-    CONSTRAINT `fk_warehouse_detail_ware_no` FOREIGN KEY (`warehouse_detail_ware_no`) REFERENCES `wms`.`warehouse` (`warehouse_no`) ON DELETE CASCADE ON UPDATE NO ACTION,
+    CONSTRAINT `fk_warehouse_detail_warehouse_no` FOREIGN KEY (`warehouse_detail_warehouse_no`) REFERENCES `wms`.`warehouse` (`warehouse_no`) ON DELETE CASCADE ON UPDATE NO ACTION,
     CONSTRAINT `fk_warehouse_detail_area_no` FOREIGN KEY (`warehouse_detail_area_no`) REFERENCES `wms`.`area` (`area_no`) ON DELETE CASCADE ON UPDATE NO ACTION,
     CONSTRAINT `fk_warehouse_detail_rack_no` FOREIGN KEY (`warehouse_detail_rack_no`) REFERENCES `wms`.`rack` (`rack_no`) ON DELETE CASCADE ON UPDATE NO ACTION,
     CONSTRAINT `fk_warehouse_detail_cell_no` FOREIGN KEY (`warehouse_detail_cell_no`) REFERENCES `wms`.`cell` (`cell_no`) ON DELETE CASCADE ON UPDATE NO ACTION
@@ -155,17 +155,17 @@ CREATE TABLE IF NOT EXISTS `wms`.`item_movement_history` (
     `item_movement_history_item_no` INT NOT NULL COMMENT '품목번호',
     `item_movement_history_amount` INT NOT NULL COMMENT '이동수량',
     `item_movement_history_day` DATE NOT NULL DEFAULT(now()) COMMENT '이동일자',
-    `item_movement_history_pr_ware_no` INT NOT NULL COMMENT '기존창고번호',
+    `item_movement_history_pr_warehouse_no` INT NOT NULL COMMENT '기존창고번호',
     `item_movement_history_pr_area_no` INT NOT NULL COMMENT '기존구역번호',
     `item_movement_history_pr_rack_no` INT NOT NULL COMMENT '기존랙번호',
     `item_movement_history_pr_cell_no` INT NOT NULL COMMENT '기존셀번호',
-    `item_movement_history_ware_no` INT NOT NULL COMMENT '이동창고번호',
+    `item_movement_history_warehouse_no` INT NOT NULL COMMENT '이동창고번호',
     `item_movement_history_area_no` INT NOT NULL COMMENT '이동구역번호',
     `item_movement_history_rack_no` INT NOT NULL COMMENT '이동랙번호',
     `item_movement_history_cell_no` INT NOT NULL COMMENT '이동셀번호',
     PRIMARY KEY (`item_movement_history_no`),
-    INDEX `pr_ware_no_idx` (
-        `item_movement_history_pr_ware_no` ASC
+    INDEX `pr_warehouse_no_idx` (
+        `item_movement_history_pr_warehouse_no` ASC
     ) VISIBLE,
     INDEX `pr_area_no_idx` (
         `item_movement_history_pr_area_no` ASC
@@ -176,8 +176,8 @@ CREATE TABLE IF NOT EXISTS `wms`.`item_movement_history` (
     INDEX `pr_cell_no_idx` (
         `item_movement_history_pr_cell_no` ASC
     ) VISIBLE,
-    INDEX `ware_no_idx` (
-        `item_movement_history_ware_no` ASC
+    INDEX `warehouse_no_idx` (
+        `item_movement_history_warehouse_no` ASC
     ) VISIBLE,
     INDEX `area_no_idx` (
         `item_movement_history_area_no` ASC
@@ -188,8 +188,8 @@ CREATE TABLE IF NOT EXISTS `wms`.`item_movement_history` (
     INDEX `cell_no_idx` (
         `item_movement_history_cell_no` ASC
     ) VISIBLE,
-    CONSTRAINT `fk_item_movement_history_pr_ware_no` FOREIGN KEY (
-        `item_movement_history_pr_ware_no`
+    CONSTRAINT `fk_item_movement_history_pr_warehouse_no` FOREIGN KEY (
+        `item_movement_history_pr_warehouse_no`
     ) REFERENCES `wms`.`warehouse` (`warehouse_no`) ON DELETE CASCADE ON UPDATE NO ACTION,
     CONSTRAINT `fk_item_movement_history_pr_area_no` FOREIGN KEY (
         `item_movement_history_pr_area_no`
@@ -201,7 +201,7 @@ CREATE TABLE IF NOT EXISTS `wms`.`item_movement_history` (
         `item_movement_history_pr_cell_no`
     ) REFERENCES `wms`.`cell` (`cell_no`) ON DELETE CASCADE ON UPDATE NO ACTION,
     CONSTRAINT `wfk_item_movement_history_are_no` FOREIGN KEY (
-        `item_movement_history_ware_no`
+        `item_movement_history_warehouse_no`
     ) REFERENCES `wms`.`warehouse` (`warehouse_no`) ON DELETE CASCADE ON UPDATE NO ACTION,
     CONSTRAINT `fk_item_movement_history_area_no` FOREIGN KEY (
         `item_movement_history_area_no`
@@ -338,7 +338,7 @@ CREATE TABLE IF NOT EXISTS `wms`.`purchase_sheet_detail` (
     `purchase_sheet_detail_amount` INT NOT NULL COMMENT '발주수량',
     `purchase_sheet_detail_status` INT NOT NULL COMMENT '입고진행상태',
     `purchase_sheet_detail_item_no` INT NOT NULL COMMENT '품목번호',
-    `purchase_sheet_detail_ware_no` INT NOT NULL COMMENT '입고예정창고번호',
+    `purchase_sheet_detail_warehouse_no` INT NOT NULL COMMENT '입고예정창고번호',
     PRIMARY KEY (`purchase_sheet_detail_no`),
     INDEX `order_detail_no_idx` (
         `purchase_sheet_detail_order_detail_no` ASC
@@ -346,8 +346,8 @@ CREATE TABLE IF NOT EXISTS `wms`.`purchase_sheet_detail` (
     INDEX `item_no_idx` (
         `purchase_sheet_detail_item_no` ASC
     ) VISIBLE,
-    INDEX `ware_no_idx` (
-        `purchase_sheet_detail_ware_no` ASC
+    INDEX `warehouse_no_idx` (
+        `purchase_sheet_detail_warehouse_no` ASC
     ) VISIBLE,
     CONSTRAINT `fk_purchase_sheet_detail_purchase_sheet_no` FOREIGN KEY (`purchase_sheet_detail_no`) REFERENCES `wms`.`purchase_sheet` (`purchase_sheet_no`) ON DELETE CASCADE ON UPDATE NO ACTION,
     CONSTRAINT `fk_purchase_sheet_detail_order_detail_no` FOREIGN KEY (
@@ -356,8 +356,8 @@ CREATE TABLE IF NOT EXISTS `wms`.`purchase_sheet_detail` (
     CONSTRAINT `fk_purchase_sheet_detail_item_no` FOREIGN KEY (
         `purchase_sheet_detail_item_no`
     ) REFERENCES `wms`.`item` (`item_no`) ON DELETE CASCADE ON UPDATE NO ACTION,
-    CONSTRAINT `fk_purchase_sheet_detail_ware_no` FOREIGN KEY (
-        `purchase_sheet_detail_ware_no`
+    CONSTRAINT `fk_purchase_sheet_detail_warehouse_no` FOREIGN KEY (
+        `purchase_sheet_detail_warehouse_no`
     ) REFERENCES `wms`.`warehouse` (`warehouse_no`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE = InnoDB COMMENT = '발주서 상세';
 
